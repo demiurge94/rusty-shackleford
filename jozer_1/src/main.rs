@@ -8,13 +8,18 @@ struct Car{
 
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Hello, world!");
-    let file = File::open("data.txt"); 
-    let buf_reader = BufReader::new(file); 
-    
-    for lines in buf_reader.lines(){
-        println!("{}", line?); 
+    let file = File::open("data.txt")?; 
+    let reader = BufReader::new(file); 
+    let mut cars: [Car; 18]; 
+
+    for line in reader.lines(){
+        let l = line.unwrap(); 
+        let linea = l.split_ascii_whitespace(); 
+        for w in linea {
+            println!("{}", w); 
+        }
     }
-    Ok(()); 
+    Ok(())
 }
